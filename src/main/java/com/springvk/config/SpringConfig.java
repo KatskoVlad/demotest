@@ -1,10 +1,6 @@
 package com.springvk.config;
 
-import com.springvk.dao.UserDao;
-import com.springvk.dao.UserDaoImpl;
 import com.springvk.service.TestBean;
-import com.springvk.service.UserService;
-import com.springvk.service.UserServiceImpl;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -48,13 +44,13 @@ public class SpringConfig {
         return dataSource;
     }
 
-    @Bean
-    public UserDao getUserDao(){
-        return new UserDaoImpl(getJdbcTemplate());
-    }
-
-    @Bean
-    public UserService getUserService(){
-        return new UserServiceImpl();
-    }
+//    @Bean
+//    public UserDao getUserDao(){
+//        return new UserDaoImpl(getJdbcTemplate());
+//    }
+//
+//    @Bean
+//    public UserService getUserService(){
+//        return new UserServiceImpl();
+//    }
 }

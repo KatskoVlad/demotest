@@ -1,8 +1,6 @@
 package com.springvk.entity;
 
-import java.io.Serializable;
-
-public class Role implements Serializable {
+public class Role {
 
     private static final int serialVersionUID = 1;
 

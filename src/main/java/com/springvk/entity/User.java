@@ -1,12 +1,21 @@
 package com.springvk.entity;
 
-import java.util.Objects;
+import lombok.EqualsAndHashCode;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
+import java.util.Date;
+
+@EqualsAndHashCode
 public class User {
-    private int id;
+    private Long id;
     private String name;
+    private String surName;
     private String email;
     private int age;
+    private Long idRole;
+    private boolean isBlocked;
+    private Date dateReg;
 
     private String login;
     private String password;
@@ -14,20 +23,24 @@ public class User {
     public User() {
     }
 
-    public User(int id, String name, String email, int age, String login, String password) {
+    public User(Long id, String name, String surName, String email, int age, Long idRole, boolean isBlocked, String login, String password, Date dateReg) {
         this.id = id;
         this.name = name;
+        this.surName = surName;
         this.email = email;
         this.age = age;
+        this.idRole = idRole;
+        this.isBlocked = isBlocked;
         this.login = login;
         this.password = password;
+        this.dateReg = dateReg;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -37,6 +50,14 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getSurName() {
+        return surName;
+    }
+
+    public void setSurName(String surName) {
+        this.surName = surName;
     }
 
     public String getEmail() {
@@ -55,6 +76,22 @@ public class User {
         this.age = age;
     }
 
+    public Long getIdRole() {
+        return idRole;
+    }
+
+    public void setIdRole(Long idRole) {
+        this.idRole = idRole;
+    }
+
+    public boolean isBlocked() {
+        return isBlocked;
+    }
+
+    public void setBlocked(boolean blocked) {
+        isBlocked = blocked;
+    }
+
     public String getLogin() {
         return login;
     }
@@ -71,33 +108,17 @@ public class User {
         this.password = password;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return id == user.id &&
-                age == user.age &&
-                name.equals(user.name) &&
-                email.equals(user.email) &&
-                login.equals(user.login) &&
-                password.equals(user.password);
+    public Date getDateReg() {
+        return dateReg;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, email, age, login, password);
+    public void setDateReg(Date dateReg) {
+        this.dateReg = dateReg;
     }
 
     @Override
     public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", age=" + age +
-                ", login='" + login + '\'' +
-                ", password='" + password + '\'' +
-                '}';
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
     }
+
 }

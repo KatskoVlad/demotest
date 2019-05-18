@@ -1,16 +1,19 @@
 package com.springvk.controller;
 
-import com.springvk.dao.UserDao;
 import com.springvk.entity.User;
 import com.springvk.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 @Controller
 @RequestMapping("/")
@@ -68,15 +71,15 @@ public class UserController {
     }
 //    @GetMapping("/user/{id}")
 //    public User getUser(@RequestParam(value = "id") int id) {
-//        return userDao.getById(id);
+//           return userService.getById(id);
 //    }
 
-//    @GetMapping("/createUser")
-//    @ResponseStatus(HttpStatus.OK)
-//    public ResponseEntity<UserCreateRequest> createUser(@RequestBody UserCreateRequest userCreateRequest){
-//        userDao.save(userCreateRequest);
-//        return new ResponseEntity<UserCreateRequest>(userCreateRequest, HttpStatus.OK);
-//    }
+    @GetMapping("/createUser")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<User> createUser(@RequestBody User user){
+        userService.save(user);
+        return new ResponseEntity<User>(user, HttpStatus.OK);
+    }
 
 
 }

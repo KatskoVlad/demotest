@@ -18,7 +18,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     public ViewResolver getViewResolver() {
         FreeMarkerViewResolver freeMarkerViewResolver = new FreeMarkerViewResolver();
         freeMarkerViewResolver.setOrder(1);
-        freeMarkerViewResolver.setSuffix(".ftl");
+        freeMarkerViewResolver.setSuffix(".ftl"); // ftl - FreeMaker Template Language
         return freeMarkerViewResolver;
     }
 

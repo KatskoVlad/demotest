@@ -4,24 +4,25 @@ import com.springvk.entity.User;
 import com.springvk.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Component
-public class UserDaoImpl implements UserDao{
+@Repository
+public class UserDaoImpl implements UserDao {
+
+    public JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public final JdbcTemplate jdbcTemplate;
-    public final String SQL_STRING_QUERY = "SELECT * FROM user";
-    public final String SQL_SAVE = "INSERT INTO user (name_user, email, age) VALUES (?, ?, ?)";
-    public final String SQL_UPDATE = "UPDATE user SET name_user=?, email=?, age=? WHERE id=?";
-    public final String SQL_GET_BY_ID = "SELECT * FROM user WHERE id=?";
-    public final String SQL_DELETE = "DELETE FROM user WHERE id=?";
-
     public UserDaoImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
+
+    public final String SQL_STRING_QUERY = "SELECT * FROM users";
+    public final String SQL_SAVE = "INSERT INTO users (name_user, email, age) VALUES (?, ?, ?)";
+    public final String SQL_UPDATE = "UPDATE user SET name_user=?, email=?, age=? WHERE id=?";
+    public final String SQL_GET_BY_ID = "SELECT * FROM users WHERE id=?";
+    public final String SQL_DELETE = "DELETE FROM users WHERE id=?";
 
     public List<User> findAll() {
         return jdbcTemplate.query(SQL_STRING_QUERY, new UserMapper());
