@@ -7,14 +7,12 @@ import java.sql.SQLException;
 import java.util.List;
 
 
-public interface RoleDao {
-
+public interface RoleDao extends GenericDao<Role, Long > {
     Role getRoleRowMapper(ResultSet resultSet, int i) throws SQLException;
     List<Role> getRolesByUserId(Long userId);
     List<Role> findAll();
-    Role findById(Long id);
+    Role getById(Long id);
     void delete(Long id);
-    Role save(Role entity);
-    Role update(Role entity);
-
+    void save(Role entity);
+    void update(Role entity);
 }

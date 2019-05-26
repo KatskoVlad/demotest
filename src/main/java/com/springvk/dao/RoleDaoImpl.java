@@ -55,6 +55,11 @@ public class RoleDaoImpl implements RoleDao {
     }
 
     @Override
+    public Role getById(Long id) {
+        return null;
+    }
+
+    @Override
     public Role findById(Long id) {
         final String findById = "select * from role where role_id = :roleId";
 
@@ -70,7 +75,7 @@ public class RoleDaoImpl implements RoleDao {
     }
 
     @Override
-    public Role save(Role entity) {
+    public void save(Role entity) {
         final String createQuery = "INSERT INTO role (role_name, role_user_id) " +
                 "VALUES (:roleName, :roleUserId);";
 
@@ -84,12 +89,10 @@ public class RoleDaoImpl implements RoleDao {
         namedParameterJdbcTemplate.update(createQuery, params, keyHolder);
 
         long createdRoleId = Objects.requireNonNull(keyHolder.getKey()).longValue();
-
-        return findById(createdRoleId);
     }
 
     @Override
-    public Role update(Role entity) {
-        return null;
+    public void update(Role entity) {
+
     }
 }

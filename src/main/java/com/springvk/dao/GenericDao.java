@@ -10,7 +10,7 @@ public interface GenericDao<T, K> {
 
     void delete(K id);
 
-    T save(T entity);
+    void save(T entity);
 
-    T update(T entity);
+    void update(T entity);
 }

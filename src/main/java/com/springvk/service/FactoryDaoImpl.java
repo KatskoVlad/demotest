@@ -65,7 +65,7 @@ public class FactoryDaoImpl implements FactoryDao {
     }
 
     @Override
-    public Factory save(Factory entity) {
+    public void save(Factory entity) {
         final String createQuery = "INSERT INTO factory (factory_id, factory_name, factory_open_year) " +
                 "VALUES (:factory_id, :factory_name, :factory_open_year);";
 
@@ -80,11 +80,11 @@ public class FactoryDaoImpl implements FactoryDao {
 
         long createdFactoryId = Objects.requireNonNull(keyHolder.getKey()).longValue();
 
-        return findById(createdFactoryId);
+        //return findById(createdFactoryId);
     }
 
     @Override
-    public Factory update(Factory entity) {
+    public void update(Factory entity) {
         final String createQuery = "UPDATE factory set factory_name = :factory_name, factory_open_year =:factory_open_year, " +
                 " where factory_id = :factory_id";
 
@@ -94,7 +94,7 @@ public class FactoryDaoImpl implements FactoryDao {
         params.addValue("factory_id", entity.getFactoryId());
 
         namedParameterJdbcTemplate.update(createQuery, params);
-        return findById(entity.getFactoryId());
+        //return findById(entity.getFactoryId());
     }
     @Override
     public List<Long> batchUpdate(List<Factory> factorys) {

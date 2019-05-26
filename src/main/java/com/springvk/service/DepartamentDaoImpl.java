@@ -1,7 +1,7 @@
 package com.springvk.service;
 
-import com.springvk.entity.Departament;
 import com.springvk.dao.DepartamentDao;
+import com.springvk.entity.Departament;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
@@ -69,7 +69,7 @@ public class DepartamentDaoImpl implements DepartamentDao {
     }
 
     @Override
-    public Departament save(Departament entity) {
+    public void save(Departament entity) {
         final String createQuery = "INSERT INTO department (dep_id, dep_name, dep_capacity, factory_id) " +
                 "VALUES (:dep_id, :dep_name, :dep_capacity, :factory_id);";
 
@@ -85,11 +85,11 @@ public class DepartamentDaoImpl implements DepartamentDao {
 
         long createdUserId = Objects.requireNonNull(keyHolder.getKey()).longValue();
 
-        return findById(createdUserId);
+        //return findById(createdUserId);
     }
 
     @Override
-    public Departament update(Departament entity) {
+    public void update(Departament entity) {
         final String createQuery = "UPDATE department set user_name = :userName, user_surname = :userSurname, " +
                 "birth_date = :birthDate, dep_id = :depId where user_id = :userId";
 
@@ -100,7 +100,7 @@ public class DepartamentDaoImpl implements DepartamentDao {
         params.addValue("depId", entity.getDepId());
 
         namedParameterJdbcTemplate.update(createQuery, params);
-        return findById(entity.getDepId());
+        //return findById(entity.getDepId());
     }
     @Override
     public List<Long> batchUpdate(List<Departament> departaments) {

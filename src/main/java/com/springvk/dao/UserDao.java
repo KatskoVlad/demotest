@@ -4,7 +4,7 @@ import com.springvk.entity.User;
 
 import java.util.List;
 
-public interface UserDao {
+public interface UserDao extends GenericDao<User, Long> {
 
     void save (User user);
 
