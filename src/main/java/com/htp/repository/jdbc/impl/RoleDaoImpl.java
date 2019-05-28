@@ -2,7 +2,6 @@ package com.htp.repository.jdbc.impl;
 
 import com.htp.domain.jdbc.Role;
 import com.htp.repository.jdbc.RoleDao;
-import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -23,8 +22,8 @@ import java.util.Objects;
 @Transactional
 public class RoleDaoImpl implements RoleDao {
 
-    private static final String ROLE_ID = "role_id";
-    private static final String ROLE_NAME = "role_name";
+    private static final String ROLE_ID = "id_role";
+    private static final String NAME_ROLE = "name_role";
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -34,10 +33,10 @@ public class RoleDaoImpl implements RoleDao {
 
     private Role getRoleRowMapper(ResultSet resultSet, int i) throws SQLException {
 
-        var role = new Role();
+        Role role = new Role();
 
         role.setRoleId(resultSet.getLong(ROLE_ID));
-        role.setRoleName(resultSet.getString(ROLE_NAME));
+        role.setRoleName(resultSet.getString(NAME_ROLE));
 
         return role;
     }
@@ -51,10 +50,10 @@ public class RoleDaoImpl implements RoleDao {
 
     @Override
     public Role findById(Long id) {
-        final String findById = "select * from role where role_id = :roleId";
+        final String findById = "select * from role where id_role = :roleId";
 
         MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("roleId", id);
+        params.addValue("id_role", id);
 
         return namedParameterJdbcTemplate.queryForObject(findById, params, this::getRoleRowMapper);
     }

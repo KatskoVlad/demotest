@@ -24,16 +24,14 @@ import java.util.Objects;
 @Transactional
 public class UserDaoImpl implements UserDao {
 
-    private static final String USER_ID = "user_id";
+    private static final String ID_USER = "id_user";
     private static final String NAME = "name";
     private static final String SURNAME = "surname";
     private static final String LOGIN = "login";
     private static final String PASSWORD = "password";
-    private static final String PHONE_NUMBER = "phone_number";
     private static final String EMAIL = "email";
-    private static final String CREATION_DATE = "creation_date";
-    private static final String ROLE_ID = "role_id";
-    private static final String LAST_ID = "lastId";
+    private static final String DATE_REGISTR = "date_registr";
+    private static final String ID_ROLE = "id_role";
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -44,15 +42,14 @@ public class UserDaoImpl implements UserDao {
     private User getUserRowMapper(ResultSet resultSet, int i) throws SQLException {
         User user = new User();
 
-        user.setUserId(resultSet.getLong(USER_ID));
+        user.setUserId(resultSet.getLong(ID_USER));
         user.setName(resultSet.getString(NAME));
         user.setSurname(resultSet.getString(SURNAME));
         user.setLogin(resultSet.getString(LOGIN));
         user.setPassword(resultSet.getString(PASSWORD));
-        user.setPhoneNumber(resultSet.getString(PHONE_NUMBER));
         user.setEmail(resultSet.getString(EMAIL));
-        user.setCreationDate(resultSet.getTimestamp(CREATION_DATE));
-        user.setRoleId(resultSet.getLong(ROLE_ID));
+        user.setCreationDate(resultSet.getTimestamp(DATE_REGISTR));
+        user.setRoleId(resultSet.getLong(ID_ROLE));
 
         return user;
     }

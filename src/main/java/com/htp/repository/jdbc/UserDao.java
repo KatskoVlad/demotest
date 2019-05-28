@@ -7,10 +7,9 @@ import java.util.List;
 
 public interface UserDao extends GenericDao<User, Long> {
     //    HibernateUser findByLogin(String login);
-//
-//
+
 //    List<Long> batchUpdate(List<HibernateUser> users);
-//
+
     List<User> search(String query, Integer limit, Integer offset);
 
     Long findBySurname(String surname);
