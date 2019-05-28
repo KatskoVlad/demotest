@@ -12,9 +12,13 @@ public class User {
     private String surname;
     private String login;
     private String password;
-    private String phoneNumber;
     private String email;
-    private Timestamp creationDate;
+    private Timestamp dateRegistr;
+    private int age;
+    private boolean isBlock;
     private Long roleId;
 
+    public boolean getIsBlock() {
+        return isBlock;
+    }
 }
