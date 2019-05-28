@@ -50,10 +50,10 @@ public class RoleDaoImpl implements RoleDao {
 
     @Override
     public Role findById(Long id) {
-        final String findById = "select * from role where id_role = :roleId";
+        final String findById = "select * from role where id_role = :idRole";
 
         MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("id_role", id);
+        params.addValue("idRole", id);
 
         return namedParameterJdbcTemplate.queryForObject(findById, params, this::getRoleRowMapper);
     }
@@ -70,23 +70,23 @@ public class RoleDaoImpl implements RoleDao {
 
     @Override
     public void delete(Long id) {
-        final String delete = "delete from role where role_id = :roleId";
+        final String delete = "delete from role where id_role = :idRole";
 
         MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("roleId", id);
+        params.addValue("idRole", id);
 
         namedParameterJdbcTemplate.update(delete, params);
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.DEFAULT)
-    public Role save(Role entity) {
+    public Role save(Role role) {
         final String createQuery = "INSERT INTO role (role_name) VALUES (:name);";
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
         MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("name", entity.getRoleName());
+        params.addValue("name", role.getRoleName());
 
         namedParameterJdbcTemplate.update(createQuery, params, keyHolder);
 
@@ -96,15 +96,15 @@ public class RoleDaoImpl implements RoleDao {
     }
 
     @Override
-    public Role update(Role entity) {
-        final String createQuery = "UPDATE role set role_name = :name where role_id = :roleId";
+    public Role update(Role role) {
+        final String createQuery = "UPDATE role set name_role = :name where id_role = :idRole";
 
         MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("name", entity.getRoleName());
+        params.addValue("nameRole", role.getRoleName());
 
-        params.addValue("roleId", entity.getRoleId());
+        params.addValue("idRole", role.getRoleId());
 
         namedParameterJdbcTemplate.update(createQuery, params);
-        return findById(entity.getRoleId());
+        return findById(role.getRoleId());
     }
 }
