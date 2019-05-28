@@ -1,4 +1,4 @@
-//package com.htp.service;
+package com.htp.service;
 //
 //import com.htp.dao.UserDao;
 //import com.htp.entity.User;

@@ -70,8 +70,8 @@ public class SpringBootHibernateApplication extends SpringBootServletInitializer
     //Entity Manager
 
     @Autowired
-    @Bean(name = "entityManagerFactory")
-    //@Bean(name = "transactionManager")
+    //@Bean(name = "entityManagerFactory")
+    @Bean(name = "transactionManager")
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
         LocalContainerEntityManagerFactoryBean em
                 = new LocalContainerEntityManagerFactoryBean();
