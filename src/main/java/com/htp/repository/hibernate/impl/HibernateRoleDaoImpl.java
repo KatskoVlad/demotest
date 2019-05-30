@@ -22,7 +22,7 @@ public class HibernateRoleDaoImpl implements HibernateRoleDao {
     @Override
     public List<HibernateRole> findAll() {
         try (Session session = sessionFactory.openSession()) {
-            return session.createQuery("select hr from HibernateRole hr", HibernateRole.class).getResultList();
+            return session.createQuery("select r.idRole, r.roleName from HibernateRole r", HibernateRole.class).getResultList();
         }
     }
 

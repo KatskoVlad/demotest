@@ -6,6 +6,7 @@ import com.htp.repository.GenericDao;
 import java.util.List;
 
 public interface UserDao extends GenericDao<User, Long> {
+    User findByLogin(String login);
     //    HibernateUser findByLogin(String login);
 
 //    List<Long> batchUpdate(List<HibernateUser> users);

@@ -44,11 +44,10 @@ public class RoleController {
         return new ResponseEntity<>(roleDao.findAll(), HttpStatus.OK);
     }
 
-
     @Autowired
     private HibernateRoleDao hibernateRoleDaoImpl;
 
-    @GetMapping("/all_hibernate_user")
+    @GetMapping("/hibernateRoleAll")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<HibernateRole>> getRolesHibernate() {
         return new ResponseEntity<>(hibernateRoleDaoImpl.findAll(), HttpStatus.OK);
@@ -82,9 +81,9 @@ public class RoleController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Role> updateRole(@PathVariable("id") Long roleId,
+    public ResponseEntity<Role> updateRole(@PathVariable("id") Long idRole,
                                            @RequestBody RoleCreateRequest request) {
-        Role role = roleDao.findById(roleId);
+        Role role = roleDao.findById(idRole);
         role.setRoleName(request.getRoleName());
 
         Role updatedRole = roleDao.update(role);
@@ -93,8 +92,8 @@ public class RoleController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Long> deleteRole(@PathVariable("id") Long roleId) {
-        roleDao.delete(roleId);
-        return new ResponseEntity<>(roleId, HttpStatus.OK);
+    public ResponseEntity<Long> deleteRole(@PathVariable("id") Long idRole) {
+        roleDao.delete(idRole);
+        return new ResponseEntity<>(idRole, HttpStatus.OK);
     }
 }

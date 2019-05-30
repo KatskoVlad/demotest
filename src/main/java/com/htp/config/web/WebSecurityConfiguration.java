@@ -21,13 +21,10 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private UserDetailsService userDetailsService;
-    private AuthenticationManagerBuilder authenticationManagerBuilder;
 
     @Autowired
     public void configureAuthentication(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
-        this.authenticationManagerBuilder = authenticationManagerBuilder;
-        authenticationManagerBuilder
-                .userDetailsService(userDetailsService);
+        authenticationManagerBuilder.userDetailsService(userDetailsService);
     }
 
     @Bean

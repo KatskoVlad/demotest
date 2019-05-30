@@ -58,7 +58,7 @@ public class HibernateUser {
     private HibernateRole hibernateRole;
 
     @JsonBackReference
-    @OneToMany(mappedBy = "id_accounts", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "accountUser", fetch = FetchType.EAGER)
     private List<HibernateAccount> hibernateAccount = Collections.emptyList();
 
 }

@@ -16,7 +16,7 @@ public class User {
     private Timestamp dateRegistr;
     private int age;
     private boolean isBlock;
-    private Long roleId;
+    private Long idRole;
 
     public boolean getIsBlock() {
         return isBlock;

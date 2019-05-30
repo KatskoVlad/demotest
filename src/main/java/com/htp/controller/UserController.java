@@ -56,7 +56,7 @@ public class UserController {
     @Autowired
     private HibernateUserDao hibernateUserDaoImpl;
 
-    @GetMapping("/all_hibernate_user")
+    @GetMapping("/hibernateUserAll")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<HibernateUser>> getUsersHibernate() {
         return new ResponseEntity<>(hibernateUserDaoImpl.findAll(), HttpStatus.OK);
@@ -89,7 +89,7 @@ public class UserController {
         user.setSurname(request.getSurname());
         user.setLogin(request.getLogin());
         user.setPassword(request.getPassword());
-        user.setRoleId(roleDao.findByRoleName(request.getRoleName().toLowerCase()));
+        user.setIdRole(roleDao.findByRoleName(request.getRoleName().toLowerCase()));
 
         User savedUser = userDao.save(user);
 //        roleDao.save(new HibernateRoleDao(savedUser.getUserId(), "ROLE_USER"));
@@ -116,7 +116,7 @@ public class UserController {
         user.setSurname(request.getSurname());
         user.setLogin(request.getLogin());
         user.setPassword(request.getPassword());
-        user.setRoleId(roleDao.findByRoleName(request.getRoleName().toLowerCase()));
+        user.setIdRole(roleDao.findByRoleName(request.getRoleName().toLowerCase()));
 
         User updateUser = userDao.update(user);
         return new ResponseEntity<>(updateUser, HttpStatus.OK);

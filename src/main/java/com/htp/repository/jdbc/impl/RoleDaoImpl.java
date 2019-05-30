@@ -22,7 +22,7 @@ import java.util.Objects;
 @Transactional
 public class RoleDaoImpl implements RoleDao {
 
-    private static final String ROLE_ID = "id_role";
+    private static final String ID_ROLE = "id_role";
     private static final String NAME_ROLE = "name_role";
 
     @Autowired
@@ -35,7 +35,7 @@ public class RoleDaoImpl implements RoleDao {
 
         Role role = new Role();
 
-        role.setRoleId(resultSet.getLong(ROLE_ID));
+        role.setIdRole(resultSet.getLong(ID_ROLE));
         role.setRoleName(resultSet.getString(NAME_ROLE));
 
         return role;
@@ -65,7 +65,7 @@ public class RoleDaoImpl implements RoleDao {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("roleName", roleName.toLowerCase());
 
-        return namedParameterJdbcTemplate.queryForObject(findByName, params, this::getRoleRowMapper).getRoleId();
+        return namedParameterJdbcTemplate.queryForObject(findByName, params, this::getRoleRowMapper).getIdRole();
     }
 
     @Override
@@ -102,9 +102,15 @@ public class RoleDaoImpl implements RoleDao {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("nameRole", role.getRoleName());
 
-        params.addValue("idRole", role.getRoleId());
+        params.addValue("idRole", role.getIdRole());
 
         namedParameterJdbcTemplate.update(createQuery, params);
-        return findById(role.getRoleId());
+        return findById(role.getIdRole());
+    }
+
+    @Override
+    public List<Role> getRolesByUserId(Long userId) {
+        final String getRolesByUserId = "select * from role where id_role = ?";
+        return jdbcTemplate.query(getRolesByUserId, new Object[]{userId}, this::getRoleRowMapper);
     }
 }

@@ -31,8 +31,8 @@ public class HibernateAccount {
     @Column(name = "date_reg")
     private String createDateAccount;
 
-    @Column(name = "id_user")
-    private Long idUser;
+//    @Column(name = "id_user")
+//    private Long idUser;
 
     @ManyToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "id_user")

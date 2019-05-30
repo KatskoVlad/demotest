@@ -53,7 +53,7 @@ public class UserDaoImpl implements UserDao {
         user.setAge(resultSet.getInt(AGE));
         user.setBlock(resultSet.getBoolean(IS_BLOCK));
         user.setDateRegistr(resultSet.getTimestamp(DATE_REGISTR));
-        user.setRoleId(resultSet.getLong(ID_ROLE));
+        user.setIdRole(resultSet.getLong(ID_ROLE));
 
         return user;
     }
@@ -65,13 +65,13 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User findById(Long id) {
+    public User findById(Long idUser) {
 //        final String findById = "select * from user where user_id = ?";
 //        return jdbcTemplate.queryForObject(findById, new Object[]{id}, this::getUserRowMapper);
-        final String findById = "select * from user where id_user = :id";
+        final String findById = "select * from users where id_user = :idUser";
 
         MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("id_user", id);
+        params.addValue("id_user", idUser);
 
         return namedParameterJdbcTemplate.queryForObject(findById, params, this::getUserRowMapper);
     }
@@ -90,7 +90,7 @@ public class UserDaoImpl implements UserDao {
     @Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.DEFAULT)
     public User save(User user) {
         final String createQuery = "INSERT INTO users (name, surname, login, password, age, is_bloked, email, date_registr, id_role) " +
-                "VALUES (:name, :surname, :login, :password, :age, :isBloked, :email, :dateRegistr, :roleId);";
+                "VALUES (:name, :surname, :login, :password, :age, :isBlock, :email, :dateRegistr, :idRole);";
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
@@ -103,7 +103,7 @@ public class UserDaoImpl implements UserDao {
         params.addValue("email", user.getEmail());
         params.addValue("isBlock", user.getIsBlock());
         params.addValue("dateRegistr", new Date(new Timestamp(System.currentTimeMillis()).getTime()));
-        params.addValue("roleId", user.getRoleId());
+        params.addValue("idRole", user.getIdRole());
 
         namedParameterJdbcTemplate.update(createQuery, params, keyHolder);
 
@@ -114,9 +114,9 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User update(User user) {
-        final String createQuery = "UPDATE user set name = :name, surname = :surname, " +
+        final String createQuery = "UPDATE users set name = :name, surname = :surname, " +
                 "login = :login, password = :password, phone_number = :phone_number, email = :email, " +
-                "creation_date = :creation_date, role_id = :role_id where user_id = :userId";
+                "date_registr = :date_registr, id_role = :id_role where id_user = :id_user";
 
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("name", user.getName());
@@ -127,7 +127,7 @@ public class UserDaoImpl implements UserDao {
         params.addValue("age", user.getAge());
         params.addValue("is_bloked", user.getIsBlock());
         params.addValue("date_registr", new Date(new Timestamp(System.currentTimeMillis()).getTime()));
-        params.addValue("id_role", user.getRoleId());
+        params.addValue("id_role", user.getIdRole());
 
         params.addValue("id_user", user.getUserId());
 
@@ -156,5 +156,15 @@ public class UserDaoImpl implements UserDao {
         params.addValue("surname", surname.toLowerCase());
 
         return namedParameterJdbcTemplate.queryForObject(findBySurname, params, this::getUserRowMapper).getUserId();
+    }
+
+    @Override
+    public User findByLogin(String login) {
+        final String findById = "select * from users where login = :login";
+
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("login", login);
+
+        return namedParameterJdbcTemplate.queryForObject(findById, params, this::getUserRowMapper);
     }
 }
