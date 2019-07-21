@@ -4,4 +4,5 @@ import com.htp.domain.hibernate.HibernateUser;
 import com.htp.repository.GenericDao;
 
 public interface HibernateUserDao extends GenericDao<HibernateUser, Long> {
+    HibernateUser findByNameAndSurname(String name, String surname);
 }

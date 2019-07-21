@@ -1,11 +1,17 @@
 package com.htp.controller.requests;
 
-import com.htp.domain.jdbc.Account;
 import lombok.Data;
+
+import java.sql.Timestamp;
 
 @Data
 public class AccountCreateRequest {
 
-        private Account account;
+        private String account;
+        private String typeAccount;
+        private Double balans;
+        private Timestamp createDate;
+        private String name;
+        private String surname;
 
 }

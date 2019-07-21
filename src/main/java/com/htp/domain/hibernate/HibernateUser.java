@@ -23,7 +23,6 @@ import java.util.List;
 @Table(name = "users")
 public class HibernateUser {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_user")
@@ -58,7 +57,11 @@ public class HibernateUser {
     private HibernateRole hibernateRole;
 
     @JsonBackReference
-    @OneToMany(mappedBy = "accountUser", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "accountUser", fetch = FetchType.LAZY)
     private List<HibernateAccount> hibernateAccount = Collections.emptyList();
+
+//    @JsonBackReference
+//    @OneToMany(mappedBy = "cardUser", fetch = FetchType.EAGER)
+//    private List<HibernateCard> hibernateCard = Collections.emptyList();
 
 }

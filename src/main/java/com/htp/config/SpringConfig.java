@@ -1,6 +1,5 @@
 package com.htp.config;
 
-import com.htp.service.TestBean;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -14,17 +13,17 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import java.util.Objects;
 
 @Configuration
-@ComponentScan(basePackages = {"com.htp.service", "com.htp.dao"})
+@ComponentScan(basePackages = {"com.htp.service", "com.htp.domain", "com.htp.repository"})
 @PropertySource("classpath:database.properties")
 public class SpringConfig {
 
     @Autowired
     private Environment properties;
 
-    @Bean
-    public TestBean getTestBean(){
-        return new TestBean("hello");
-    }
+    //@Bean
+    //public TestBean getTestBean(){
+    //    return new TestBean("hello");
+    //}
 
     @Bean
     public JdbcTemplate getJdbcTemplate(){

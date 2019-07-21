@@ -2,7 +2,7 @@ package com.htp.domain.jdbc;
 
 import lombok.Data;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
 @Data
 public class Perevod {
@@ -11,15 +11,14 @@ public class Perevod {
     private Long idCard2;
     private String typeCard1;
     private String typeCard2;
-    private Date srokCard;
+    private Timestamp srokCard;
     private String sucurityCode1;
-    private String sucurityCode2;
-    private String idAccount;
+    private Long idAccount;
     private Double summaPerevoda;
     private String valuta;
     private Double stavka;
     private Double komisya;
-    private Date dataPerevoda;
+    private Timestamp datePerevoda;
     private Long idBank;
     private Long idUser;
 }

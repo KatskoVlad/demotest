@@ -7,6 +7,7 @@
         <setting name="provider-name" value="Hibernate" />
         <datasource-mapping>
           <factory-entry name="Entities" value="950c1a07-6f14-4cfb-b825-6968518b986a" />
+          <factory-entry name="entityManagerFactory" value="950c1a07-6f14-4cfb-b825-6968518b986a" />
         </datasource-mapping>
         <naming-strategy-map />
         <deploymentDescriptor name="orm.xml" url="file://$MODULE_DIR$/META-INF/orm.xml" />

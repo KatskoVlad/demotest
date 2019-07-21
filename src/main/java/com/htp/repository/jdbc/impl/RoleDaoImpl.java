@@ -3,6 +3,7 @@ package com.htp.repository.jdbc.impl;
 import com.htp.domain.jdbc.Role;
 import com.htp.repository.jdbc.RoleDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -20,6 +21,7 @@ import java.util.Objects;
 
 @Repository
 @Transactional
+@Qualifier("roleDaoImpl")
 public class RoleDaoImpl implements RoleDao {
 
     private static final String ID_ROLE = "id_role";
@@ -41,7 +43,6 @@ public class RoleDaoImpl implements RoleDao {
         return role;
     }
 
-
     @Override
     public List<Role> findAll() {
         final String findAllQuery = "select * from role";
@@ -60,7 +61,7 @@ public class RoleDaoImpl implements RoleDao {
 
     @Override
     public Long findByRoleName(String roleName) {
-        final String findByName = "select * from role where lower(role_name) = :roleName";
+        final String findByName = "select * from role where lower(name_role) = :roleName";
 
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("roleName", roleName.toLowerCase());
@@ -81,14 +82,15 @@ public class RoleDaoImpl implements RoleDao {
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.DEFAULT)
     public Role save(Role role) {
-        final String createQuery = "INSERT INTO role (role_name) VALUES (:name);";
+        final String createQuery = "INSERT INTO role (name_role) VALUES (:nameRole);";
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
         MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("name", role.getRoleName());
+        params.addValue("nameRole", role.getRoleName());
 
-        namedParameterJdbcTemplate.update(createQuery, params, keyHolder);
+
+        namedParameterJdbcTemplate.update(createQuery, params, keyHolder, null);
 
         long createdRoleId = Objects.requireNonNull(keyHolder.getKey()).longValue();
 
@@ -97,7 +99,7 @@ public class RoleDaoImpl implements RoleDao {
 
     @Override
     public Role update(Role role) {
-        final String createQuery = "UPDATE role set name_role = :name where id_role = :idRole";
+        final String createQuery = "UPDATE role set name_role = :nameRole where id_role = :idRole";
 
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("nameRole", role.getRoleName());

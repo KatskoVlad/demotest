@@ -3,6 +3,7 @@ package com.htp.repository.jdbc.impl;
 import com.htp.domain.jdbc.User;
 import com.htp.repository.jdbc.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -22,6 +23,7 @@ import java.util.Objects;
 
 @Repository
 @Transactional
+@Qualifier("userDaoImpl")
 public class UserDaoImpl implements UserDao {
 
     private static final String ID_USER = "id_user";
@@ -34,12 +36,22 @@ public class UserDaoImpl implements UserDao {
     private static final String IS_BLOCK = "is_bloked";
     private static final String AGE = "age";
     private static final String ID_ROLE = "id_role";
+    final String delete = "delete from users where id_user = :idUser";
+    final String findAllQuery = "select * from users";
+    final String findById = "select * from users where id_user = :idUser";
+    final String createQueryUpdate = "UPDATE users set name=:name, surname=:surname, login=:login, password=:password, age=:age, " +
+                "is_bloked=isBlock, email=:email, date_registr=:dateRegistr, id_role=:idRole where id_user = :idUser";
+    final String createQueryIns = "INSERT INTO users (name, surname, login, password, age, is_bloked, email, date_registr, id_role) " +
+                                  "VALUES (:name, :surname, :login, :password, :age, :isBlock, :email, :dateRegistr, :idRole);";
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
+//    @Autowired
+//    private UserRepository userRepository;
 
     private User getUserRowMapper(ResultSet resultSet, int i) throws SQLException {
         User user = new User();
@@ -60,28 +72,25 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public List<User> findAll() {
-        final String findAllQuery = "select * from user";
         return namedParameterJdbcTemplate.query(findAllQuery, this::getUserRowMapper);
     }
 
     @Override
-    public User findById(Long idUser) {
+    public User findById(Long id) {
 //        final String findById = "select * from user where user_id = ?";
 //        return jdbcTemplate.queryForObject(findById, new Object[]{id}, this::getUserRowMapper);
-        final String findById = "select * from users where id_user = :idUser";
 
         MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("id_user", idUser);
+        params.addValue("idUser", id);
 
         return namedParameterJdbcTemplate.queryForObject(findById, params, this::getUserRowMapper);
     }
 
     @Override
     public void delete(Long id) {
-        final String delete = "delete from user where user_id = :id";
 
         MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("id_user", id);
+        params.addValue("idUser", id);
 
         namedParameterJdbcTemplate.update(delete, params);
     }
@@ -89,8 +98,6 @@ public class UserDaoImpl implements UserDao {
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.DEFAULT)
     public User save(User user) {
-        final String createQuery = "INSERT INTO users (name, surname, login, password, age, is_bloked, email, date_registr, id_role) " +
-                "VALUES (:name, :surname, :login, :password, :age, :isBlock, :email, :dateRegistr, :idRole);";
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
@@ -105,7 +112,7 @@ public class UserDaoImpl implements UserDao {
         params.addValue("dateRegistr", new Date(new Timestamp(System.currentTimeMillis()).getTime()));
         params.addValue("idRole", user.getIdRole());
 
-        namedParameterJdbcTemplate.update(createQuery, params, keyHolder);
+        namedParameterJdbcTemplate.update(createQueryIns, params, keyHolder);
 
         long createdUserId = Objects.requireNonNull(keyHolder.getKey()).longValue();
 
@@ -114,9 +121,6 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User update(User user) {
-        final String createQuery = "UPDATE users set name = :name, surname = :surname, " +
-                "login = :login, password = :password, phone_number = :phone_number, email = :email, " +
-                "date_registr = :date_registr, id_role = :id_role where id_user = :id_user";
 
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("name", user.getName());
@@ -125,20 +129,20 @@ public class UserDaoImpl implements UserDao {
         params.addValue("password", user.getPassword());
         params.addValue("email", user.getEmail());
         params.addValue("age", user.getAge());
-        params.addValue("is_bloked", user.getIsBlock());
-        params.addValue("date_registr", new Date(new Timestamp(System.currentTimeMillis()).getTime()));
-        params.addValue("id_role", user.getIdRole());
+        params.addValue("isBlock", user.getIsBlock());
+        params.addValue("dateRegistr", new Date(new Timestamp(System.currentTimeMillis()).getTime()));
+        params.addValue("idRole", user.getIdRole());
 
-        params.addValue("id_user", user.getUserId());
+        params.addValue("idUser", user.getUserId());
 
-        namedParameterJdbcTemplate.update(createQuery, params);
+        namedParameterJdbcTemplate.update(createQueryUpdate, params);
         return findById(user.getUserId());
     }
 
     @Override
     public List<User> search(String query, Integer limit, Integer offset) {
-        final String searchQuery = "select * from users where lower(name) LIKE lower(:query) or " +
-                "lower(surname) LIKE lower(:query) limit :lim offset :off";
+        final String searchQuery = "select * from users where lower(name) like lower(:query) or " +
+                                   "lower(surname) like lower(:query) order by id_user desc limit :lim offset :off";
 
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("query", "%" + query + "%");
@@ -166,5 +170,10 @@ public class UserDaoImpl implements UserDao {
         params.addValue("login", login);
 
         return namedParameterJdbcTemplate.queryForObject(findById, params, this::getUserRowMapper);
+    }
+
+    @Override
+    public void add(User user) {
+        save(user);
     }
 }

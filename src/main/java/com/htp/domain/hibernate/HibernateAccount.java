@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import java.sql.Timestamp;
 
 @Data
 @Entity
@@ -29,7 +30,7 @@ public class HibernateAccount {
     private double balansAccount;
 
     @Column(name = "date_reg")
-    private String createDateAccount;
+    private Timestamp createDateAccount;
 
 //    @Column(name = "id_user")
 //    private Long idUser;
@@ -37,5 +38,13 @@ public class HibernateAccount {
     @ManyToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "id_user")
     private HibernateUser accountUser;
+
+//    @JsonBackReference
+//    @OneToMany(mappedBy = "hibernateAccount", fetch = FetchType.EAGER)
+//    private List<HibernateCard> hibernateCard;
+
+//    @JsonBackReference
+//    @OneToMany(mappedBy = "hibernateAccount", fetch = FetchType.EAGER)
+//    private List<HibernatePerevod> hibernatePerevod;
 
 }

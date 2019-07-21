@@ -90,6 +90,8 @@ public class UserController {
         user.setLogin(request.getLogin());
         user.setPassword(request.getPassword());
         user.setIdRole(roleDao.findByRoleName(request.getRoleName().toLowerCase()));
+        user.setEmail(request.getEmail());
+        user.setAge(request.getAge());
 
         User savedUser = userDao.save(user);
 //        roleDao.save(new HibernateRoleDao(savedUser.getUserId(), "ROLE_USER"));

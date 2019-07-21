@@ -11,6 +11,8 @@ public interface UserDao extends GenericDao<User, Long> {
 
 //    List<Long> batchUpdate(List<HibernateUser> users);
 
+    void add(User user);
+
     List<User> search(String query, Integer limit, Integer offset);
 
     Long findBySurname(String surname);

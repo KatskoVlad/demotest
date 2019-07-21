@@ -7,5 +7,4 @@ public class SearchCriteria {
     private String query;
     private Integer limit;
     private Integer offset;
-
 }

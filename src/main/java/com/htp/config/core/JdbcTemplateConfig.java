@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 @Configuration
@@ -13,6 +14,8 @@ public class JdbcTemplateConfig {
 
     @Autowired
     private BasicDataSource dataSource;
+
+    private String procedureName;
 
     //https://docs.spring.io/spring/docs/4.0.x/spring-framework-reference/html/jdbc.html
     //https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/jdbc/core/JdbcTemplate.html
@@ -26,7 +29,12 @@ public class JdbcTemplateConfig {
         return new NamedParameterJdbcTemplate(dataSource);
     }
 
-//    @Bean("txManager")
+    @Bean("simpleJdbcCall")
+    public SimpleJdbcCall getJdbcCall() {
+        return new SimpleJdbcCall(dataSource).withProcedureName(procedureName);
+    }
+
+    //@Bean("txManager")
     //@Bean("entityManagerFactory")
     @Bean("transactionManager")
     public DataSourceTransactionManager getTransactionManager() {
