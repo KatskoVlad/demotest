@@ -30,7 +30,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <swagger.version>2.9.2</swagger.version>
         <jackson.version>2.9.8</jackson.version>
-        <spring.version>5.1.5.RELEASE</spring.version>
+        <spring.version>5.2.3.RELEASE</spring.version>
     </properties>
 
     <dependencies>
